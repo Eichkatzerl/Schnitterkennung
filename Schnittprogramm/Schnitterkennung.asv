@@ -1,0 +1,26 @@
+vid = VideoReader('Mustererkennung.avi');
+
+numberOfFrames = vid.NumberOfFrames;
+SAD_values = zeros(numberOfFrames,1);
+
+
+Cuts = java.util.LinkedList;
+CutsIterator = Cuts.listIterator;
+NonCuts = java.util.LinkedList;
+NonCutsIterator = NonCuts.listIterator;
+
+CutsIterator.add(2)
+
+for i = 2:numberOfFrames
+    current_frame = read(vid, i);
+    prev_frame = read(vid, i-1);
+    S = SAD_YCbCr(prev_frame, current_frame);
+    SAD_values(i) = S;
+    if S > 15 
+        sprintf('Schnitt bei ')
+    end
+end
+stem(SAD_values,'*')
+title('SAD Values')
+xlabel('Frame')
+ylabel('SAD')
