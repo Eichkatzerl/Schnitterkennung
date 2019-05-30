@@ -1,16 +1,11 @@
-vid = VideoReader('Mustererkennung.avi');
+vid = VideoReader('MustererkennungTestdaten2.avi');
 txt = "";
 
 numberOfFrames = vid.NumberOfFrames;
+framerate = vid.FrameRate;
 SAD_values = zeros(numberOfFrames,1);
-
-Cuts = java.util.LinkedList;
-CutsIterator = Cuts.listIterator;
-NonCuts = java.util.LinkedList;
-NonCutsIterator = NonCuts.listIterator;
-
-CutsIterator.add(2)
-
+tic
+figure('NumberTitle', 'off', 'Name', 'Schnitterkennung');
 for i = 2:numberOfFrames
     current_frame = read(vid, i);
     prev_frame = read(vid, i-1);
@@ -18,16 +13,20 @@ for i = 2:numberOfFrames
     SAD_values(i) = S;
     
     subplot(1,2,1);
-    imshow(current_frame)
+    image(current_frame)
 
     subplot(1,2,2);
     stem(SAD_values,'*')
-    if S > 15 
-         txt = txt + sprintf('Schnitt bei %s s nach Frame %s\n',num2str(i/30), num2str(i-1));
+    
+    Threshold = 13.8359;
+    line([0,numberOfFrames],[Threshold,Threshold])
+    if S > Threshold 
+         txt = txt + sprintf('Schnitt bei %s s nach Frame %s\n',num2str(i/framerate), num2str(i-1));
     end
     title(txt)
     xlabel('Frame')
     ylabel('SAD')
 end
+toc
 
 
