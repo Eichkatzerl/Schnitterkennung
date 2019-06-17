@@ -1,4 +1,4 @@
-vid = VideoReader('MustererkennungTestdaten2.avi');
+vid = VideoReader('Mustererkennung.avi');
 txt = "";
 
 numberOfFrames = vid.NumberOfFrames;
@@ -6,7 +6,9 @@ framerate = vid.FrameRate;
 SAD_values = zeros(numberOfFrames,1);
 tic
 figure('NumberTitle', 'off', 'Name', 'Schnitterkennung');
+
 for i = 2:numberOfFrames
+    i
     current_frame = read(vid, i);
     prev_frame = read(vid, i-1);
     S = SAD_YCbCr(prev_frame, current_frame);
